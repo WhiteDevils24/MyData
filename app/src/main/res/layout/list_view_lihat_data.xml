@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_imageDatabase"
+        android:src="@drawable/black_image_24"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <TextView
+        android:id="@+id/tv_namaLengkapDatabase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/img_imageDatabase"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="18dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Nama Lengkap"/>
+
+    <TextView
+        android:id="@+id/tv_nikDatabase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/img_imageDatabase"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_below="@id/tv_namaLengkapDatabase"
+        android:text="NIK"
+        android:textSize="14sp"/>
