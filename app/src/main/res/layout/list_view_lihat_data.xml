@@ -5,16 +5,16 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/img_imageDatabase"
+        android:id="@+id/img_imageOutput"
         android:src="@drawable/black_image_24"
         android:layout_width="100dp"
         android:layout_height="100dp"/>
 
     <TextView
-        android:id="@+id/tv_namaLengkapDatabase"
+        android:id="@+id/tv_namaLengkapOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/img_imageDatabase"
+        android:layout_toRightOf="@id/img_imageOutput"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="18dp"
         android:textSize="20sp"
@@ -25,9 +25,11 @@
         android:id="@+id/tv_nikDatabase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/img_imageDatabase"
+        android:layout_toRightOf="@id/img_imageOutput"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="24dp"
-        android:layout_below="@id/tv_namaLengkapDatabase"
+        android:layout_below="@id/tv_namaLengkapOutput"
         android:text="NIK"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
+
+</RelativeLayout>

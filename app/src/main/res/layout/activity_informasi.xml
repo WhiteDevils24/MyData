@@ -6,4 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".InformasiActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_informasi"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back_arrow_24"
+        app:title="Informasi"
+        app:titleTextColor="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
