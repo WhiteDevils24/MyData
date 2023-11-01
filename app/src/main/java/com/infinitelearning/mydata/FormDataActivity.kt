@@ -8,15 +8,16 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.isNotEmpty
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.textfield.TextInputLayout
@@ -78,6 +79,7 @@ class FormDataActivity : AppCompatActivity() {
             }
         }
 
+
         val btnSave: Button = findViewById(R.id.btn_simpan)
         btnSave.setOnClickListener{
             if (tilNIK.editText?.text?.isNotEmpty()==true &&
@@ -87,12 +89,15 @@ class FormDataActivity : AppCompatActivity() {
                 tilTanggalLahir.editText?.text?.isNotEmpty()==true &&
                 tilAlamat.editText?.text?.isNotEmpty()==true)
             {
+                val selectedRadioButton = findViewById<RadioButton>(rgJenisKelamin.checkedRadioButtonId)
+                val selectedRadioButtonText = selectedRadioButton.text.toString()
+
                 database.userDao().insertAll(User(
-                    null, 
+                    null,
                     tilNIK.editText!!.text.toString(),
                     tilNamaLengkap.editText!!.text.toString(),
                     tilNomorHandphone.editText!!.text.toString(),
-                    rgJenisKelamin.checkedRadioButtonId.toString(),
+                    selectedRadioButtonText,
                     tilTanggalLahir.editText!!.text.toString(),
                     tilAlamat.editText!!.text.toString()
                 )
@@ -105,6 +110,7 @@ class FormDataActivity : AppCompatActivity() {
         }
 
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -195,6 +201,7 @@ class FormDataActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
     
 

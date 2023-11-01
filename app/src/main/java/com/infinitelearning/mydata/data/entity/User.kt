@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class User (
     @PrimaryKey (autoGenerate = true) var uid: Int? = null,
+//    @ColumnInfo (name = "image_Data") val imageData: ByteArray?,
+//    @ColumnInfo (name = "image-File-Name") val imageFileName: String?,
     @ColumnInfo (name = "NIK") val nik: String?,
     @ColumnInfo (name = "nama_lengkap") val namaLengkap: String,
     @ColumnInfo (name = "nomor_handphone") val nomorHandphone: String,
