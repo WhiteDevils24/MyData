@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img_imageOutput"
@@ -22,7 +22,7 @@
         android:text="Nama Lengkap"/>
 
     <TextView
-        android:id="@+id/tv_nikDatabase"
+        android:id="@+id/tv_nikOutput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/img_imageOutput"
@@ -31,5 +31,43 @@
         android:layout_below="@id/tv_namaLengkapOutput"
         android:text="NIK"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_nomerHandphoneOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:text=" "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_jenisKelaminOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:text=" "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_tanggalLahirOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:text=" "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_alamatOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:text=" "
+        android:textSize="16sp" />
+
+
 
 </RelativeLayout>

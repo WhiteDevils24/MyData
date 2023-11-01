@@ -19,11 +19,12 @@
         app:title="Lihat Data"
         app:titleTextColor="@color/white" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_listData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        tools:listitem="@layout/list_view_lihat_data"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tb_lihatData" />

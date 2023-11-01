@@ -10,7 +10,7 @@ data class User (
     @PrimaryKey (autoGenerate = true) var uid: Int? = null,
     @ColumnInfo (name = "NIK") val nik: String?,
     @ColumnInfo (name = "nama_lengkap") val namaLengkap: String,
-    @ColumnInfo (name = "nomor_handphone") val nomor: String,
+    @ColumnInfo (name = "nomor_handphone") val nomorHandphone: String,
     @ColumnInfo (name = "jenis-kelamin") val jenisKelamin: String,
     @ColumnInfo (name = "tanggal-lahir") val tanggalLahir: String,
     @ColumnInfo (name = "alamat") val alamat: String,

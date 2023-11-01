@@ -59,6 +59,7 @@
                 android:id="@+id/et_NIK"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:digits="1234567890"
                 android:hint="Nomor NIK"
                 android:maxLength="16" />
@@ -100,6 +101,7 @@
                 android:id="@+id/et_nomorHandphone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:digits="1234567890"
                 android:hint="Nomor Handphone"
                 android:singleLine="true" />

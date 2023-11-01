@@ -11,13 +11,17 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isNotEmpty
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.textfield.TextInputLayout
+import com.infinitelearning.mydata.data.AppDatabase
+import com.infinitelearning.mydata.data.entity.User
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -26,6 +30,7 @@ class FormDataActivity : AppCompatActivity() {
 
     private val PICK_IMAGE= 1
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var database: AppDatabase
     
     private lateinit var imgAddImage: ImageView
     private lateinit var tilNIK: TextInputLayout
@@ -48,6 +53,8 @@ class FormDataActivity : AppCompatActivity() {
         rgJenisKelamin = findViewById(R.id.rg_jenisKelamin)
         tilTanggalLahir = findViewById(R.id.til_tanggalLahir)
         tilAlamat = findViewById(R.id.til_alamat)
+
+        database = AppDatabase.getInstance(applicationContext)
 
         val toolbarFormData: Toolbar = findViewById(R.id.tb_formData)
         setSupportActionBar(toolbarFormData)
@@ -73,13 +80,31 @@ class FormDataActivity : AppCompatActivity() {
 
         val btnSave: Button = findViewById(R.id.btn_simpan)
         btnSave.setOnClickListener{
-
+            if (tilNIK.editText?.text?.isNotEmpty()==true &&
+                tilNamaLengkap.editText?.text?.isNotEmpty()==true &&
+                tilNomorHandphone.editText?.text?.isNotEmpty()==true &&
+                rgJenisKelamin.checkedRadioButtonId !=-1 &&
+                tilTanggalLahir.editText?.text?.isNotEmpty()==true &&
+                tilAlamat.editText?.text?.isNotEmpty()==true)
+            {
+                database.userDao().insertAll(User(
+                    null, 
+                    tilNIK.editText!!.text.toString(),
+                    tilNamaLengkap.editText!!.text.toString(),
+                    tilNomorHandphone.editText!!.text.toString(),
+                    rgJenisKelamin.checkedRadioButtonId.toString(),
+                    tilTanggalLahir.editText!!.text.toString(),
+                    tilAlamat.editText!!.text.toString()
+                )
+                )
+                finish()
+                Toast.makeText(applicationContext, "Data Berhasil Di Simpan", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(applicationContext, "Data Tidak Lengkap Mohon Isi Data Dengan Lengkap", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
-
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -171,6 +196,13 @@ class FormDataActivity : AppCompatActivity() {
             }
         }
     }
+    
+
+
+
+
+
+
 
 
 
