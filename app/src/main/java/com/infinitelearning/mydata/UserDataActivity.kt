@@ -15,23 +15,26 @@ class UserDataActivity : AppCompatActivity() {
         setSupportActionBar(toolbarFormData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val user = intent.getSerializableExtra("user") as? User
+        val nik = intent.getStringExtra("nik")
+        val namaLengkap = intent.getStringExtra("namaLengkap")
+        val nomorHandphone = intent.getStringExtra("nomorHandphone")
+        val jenisKelamin = intent.getStringExtra("jenisKelamin")
+        val tanggalLahir = intent.getStringExtra("tanggalLahir")
+        val alamat = intent.getStringExtra("alamat")
 
-        val nik = findViewById<TextView>(R.id.tv_nikOutput)
-        val namaLengkap = findViewById<TextView>(R.id.tv_namaLengkapOutput)
-        val nomorHanphone = findViewById<TextView>(R.id.tv_nomerHandphone)
-        val jenisKelamin = findViewById<TextView>(R.id.tv_jenisKelaminOutput)
-        val tanggalLahir= findViewById<TextView>(R.id.tv_tanggalLahirOutput)
-        val alamat = findViewById<TextView>(R.id.tv_alamatOutput)
+        val nikTextView = findViewById<TextView>(R.id.tv_nikOutput)
+        val namaLengkapTextView = findViewById<TextView>(R.id.tv_namaLengkapOutput)
+        val nomorHandphoneTextView = findViewById<TextView>(R.id.tv_nomerHandphoneOutput)
+        val jenisKelaminTextView = findViewById<TextView>(R.id.tv_jenisKelaminOutput)
+        val tanggalLahirTextView = findViewById<TextView>(R.id.tv_tanggalLahirOutput)
+        val alamatTextView = findViewById<TextView>(R.id.tv_alamatOutput)
 
-        if (user != null) {
-            nik.text = user.nik
-            namaLengkap.text = user.namaLengkap
-            nomorHanphone.text = user.nomorHandphone
-            jenisKelamin.text = user.jenisKelamin
-            tanggalLahir.text = user.tanggalLahir
-            alamat.text = user.alamat
-        }
+        nikTextView.text = nik
+        namaLengkapTextView.text = namaLengkap
+        nomorHandphoneTextView.text = nomorHandphone
+        jenisKelaminTextView.text = jenisKelamin
+        tanggalLahirTextView.text = tanggalLahir
+        alamatTextView.text = alamat
 
     }
 
