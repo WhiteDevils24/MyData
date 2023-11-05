@@ -16,7 +16,7 @@ import org.w3c.dom.Text
 class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHolder>(){
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        var imageData: ImageView
+        var imagePath: ImageView
         var nik: TextView
         var namaLengkap: TextView
         var nomorHanphone: TextView
@@ -26,7 +26,7 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
 
 
         init {
-            imageData = view.findViewById(R.id.img_imageOutput)
+            imagePath = view.findViewById(R.id.img_imageOutput)
             nik = view.findViewById(R.id.tv_nikOutput)
             namaLengkap = view.findViewById(R.id.tv_namaLengkapOutput)
             nomorHanphone = view.findViewById(R.id.tv_nomerHandphoneOutput)
@@ -50,14 +50,10 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = list[position]
 
-        // Load user's image from byte array (if imageData is not null)
-        user.imageData?.let { imageData ->
-            val imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-            holder.imageData.setImageBitmap(imageBitmap)
-        } ?: run {
-            // If imageData is null or not provided, you can set a placeholder image here.
-            holder.imageData.setImageResource(R.drawable.black_image_24)
-        }
+        val imagePath = user.imagePath
+        val imageBitmap = BitmapFactory.decodeFile(imagePath)
+
+
 
         holder.nik.text = user.nik
         holder.namaLengkap.text = user.namaLengkap
@@ -65,10 +61,11 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
         holder.jenisKelamin.text = user.jenisKelamin
         holder.tanggalLahir.text = user.tanggalLahir
         holder.alamat.text = user.alamat
+        holder.imagePath.setImageBitmap(imageBitmap)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, UserDataActivity::class.java)
-            intent.putExtra("imageData", user.imageData)
+            intent.putExtra("imagePath", user.imagePath)
             intent.putExtra("nik",user.nik)
             intent.putExtra("namaLengkap",user.namaLengkap)
             intent.putExtra("nomorHandphone",user.nomorHandphone)

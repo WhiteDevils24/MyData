@@ -15,7 +15,7 @@ data class User (
     @ColumnInfo (name = "jenis-kelamin") val jenisKelamin: String,
     @ColumnInfo (name = "tanggal-lahir") val tanggalLahir: String,
     @ColumnInfo (name = "alamat") val alamat: String,
-    @ColumnInfo (name = "image_Data") val imageData: ByteArray?,
+    @ColumnInfo (name = "image_path") val imagePath: String? = null,
 
 )
 

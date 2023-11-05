@@ -1,6 +1,7 @@
 package com.infinitelearning.mydata
 
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -17,20 +18,7 @@ class UserDataActivity : AppCompatActivity() {
         setSupportActionBar(toolbarFormData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val imageData = intent.getByteArrayExtra("imageData")
-
-        // Find the ImageView in your layout
-        val userImageView = findViewById<ImageView>(R.id.img_imageOutput)
-
-        if (imageData != null) {
-            // If image data is available, decode it into a Bitmap and set it in the ImageView
-            val imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-            userImageView.setImageBitmap(imageBitmap)
-        } else {
-            // If image data is not provided, you can set a default image or hide the ImageView.
-            userImageView.setImageResource(R.drawable.black_image_24)
-        }
-
+        val imagePath = intent.getStringExtra("imagePath")
         val nik = intent.getStringExtra("nik")
         val namaLengkap = intent.getStringExtra("namaLengkap")
         val nomorHandphone = intent.getStringExtra("nomorHandphone")
@@ -38,6 +26,7 @@ class UserDataActivity : AppCompatActivity() {
         val tanggalLahir = intent.getStringExtra("tanggalLahir")
         val alamat = intent.getStringExtra("alamat")
 
+        val imagePathView = findViewById<ImageView>(R.id.img_imageOutput)
         val nikTextView = findViewById<TextView>(R.id.tv_nikOutput)
         val namaLengkapTextView = findViewById<TextView>(R.id.tv_namaLengkapOutput)
         val nomorHandphoneTextView = findViewById<TextView>(R.id.tv_nomerHandphoneOutput)
@@ -45,6 +34,7 @@ class UserDataActivity : AppCompatActivity() {
         val tanggalLahirTextView = findViewById<TextView>(R.id.tv_tanggalLahirOutput)
         val alamatTextView = findViewById<TextView>(R.id.tv_alamatOutput)
 
+        imagePathView.setImageURI(Uri.parse(imagePath))
         nikTextView.text = nik
         namaLengkapTextView.text = namaLengkap
         nomorHandphoneTextView.text = nomorHandphone

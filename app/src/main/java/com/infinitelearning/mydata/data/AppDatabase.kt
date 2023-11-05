@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.infinitelearning.mydata.data.dao.UserDao
 import com.infinitelearning.mydata.data.entity.User
 
-@Database(entities = [User::class], version = 2)
+@Database(entities = [User::class], version = 3)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun userDao(): UserDao

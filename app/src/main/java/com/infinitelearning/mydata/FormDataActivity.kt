@@ -2,13 +2,15 @@ package com.infinitelearning.mydata
 
 import android.Manifest
 import android.app.DatePickerDialog
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Geocoder
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -23,8 +25,12 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.textfield.TextInputLayout
 import com.infinitelearning.mydata.data.AppDatabase
 import com.infinitelearning.mydata.data.entity.User
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class FormDataActivity : AppCompatActivity() {
@@ -32,9 +38,8 @@ class FormDataActivity : AppCompatActivity() {
     private val PICK_IMAGE= 1
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var database: AppDatabase
-    private var imageByteArray: ByteArray? = null
 
-
+    private var imageFilePath: String? = null
     private lateinit var imgAddImage: ImageView
     private lateinit var tilNIK: TextInputLayout
     private lateinit var tilNamaLengkap: TextInputLayout
@@ -84,7 +89,7 @@ class FormDataActivity : AppCompatActivity() {
 
         val btnSave: Button = findViewById(R.id.btn_simpan)
         btnSave.setOnClickListener{
-            if (imageByteArray != null &&
+            if (imageFilePath!= null &&
                 tilNIK.editText?.text?.isNotEmpty()==true &&
                 tilNamaLengkap.editText?.text?.isNotEmpty()==true &&
                 tilNomorHandphone.editText?.text?.isNotEmpty()==true &&
@@ -103,7 +108,8 @@ class FormDataActivity : AppCompatActivity() {
                     selectedRadioButtonText,
                     tilTanggalLahir.editText!!.text.toString(),
                     tilAlamat.editText!!.text.toString(),
-                    imageByteArray
+                    imageFilePath,
+                    
                 )
 
                 database.userDao().insertAll(user)
@@ -130,9 +136,12 @@ class FormDataActivity : AppCompatActivity() {
             val selectedImageUri = data.data
             imgAddImage.setImageURI(selectedImageUri)
 
-            // Convert the selected image to a ByteArray
-            val inputStream = selectedImageUri?.let { contentResolver.openInputStream(it) }
-            imageByteArray = inputStream?.readBytes()
+            // Save the image to internal storage and get the file path
+            imageFilePath = selectedImageUri?.let { saveImageToInternalStorage(it) }
+
+            // Display the selected image
+            imgAddImage.setImageURI(selectedImageUri)
+
         }
 
     }
@@ -144,7 +153,27 @@ class FormDataActivity : AppCompatActivity() {
         )
         startActivityForResult(galleryIntent, PICK_IMAGE)
     }
+    private fun saveImageToInternalStorage(imageUri: Uri): String? {
+        // Create a directory for image storage
+        val directory = File(filesDir, "images")
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
 
+        // Generate a unique file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "JPEG_$timeStamp.jpg"
+
+        // Copy the image to the internal storage
+        val destFile = File(directory, imageFileName)
+        contentResolver.openInputStream(imageUri)?.use { input ->
+            FileOutputStream(destFile).use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        return destFile.absolutePath
+    }
     //DatePick Function
     //Add data Date to Edit Text
     private fun showDataPicker() {
