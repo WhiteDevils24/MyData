@@ -1,5 +1,6 @@
 package com.infinitelearning.mydata.adapter
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -14,8 +15,17 @@ import com.infinitelearning.mydata.data.entity.User
 import org.w3c.dom.Text
 
 class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHolder>(){
+    private lateinit var dialog: Dialog
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+    fun setDialog(dialog: Dialog){
+        this.dialog = dialog
+    }
+
+    interface Dialog{
+        fun onHoldClick(position: Int)
+    }
+
+    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var imagePath: ImageView
         var nik: TextView
         var namaLengkap: TextView
@@ -33,6 +43,10 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
             jenisKelamin = view.findViewById(R.id.tv_jenisKelaminOutput)
             tanggalLahir = view.findViewById(R.id.tv_tanggalLahirOutput)
             alamat = view.findViewById(R.id.tv_alamatOutput)
+            view.setOnLongClickListener(){
+                dialog.onHoldClick(layoutPosition)
+                true
+            }
 
         }
     }

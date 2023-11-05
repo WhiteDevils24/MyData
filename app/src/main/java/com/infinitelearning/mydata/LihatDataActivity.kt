@@ -1,8 +1,11 @@
 package com.infinitelearning.mydata
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +34,37 @@ class LihatDataActivity : AppCompatActivity() {
 
         database = AppDatabase.getInstance(applicationContext)
         adapter = UserAdapter(list)
+
+        adapter.setDialog(object: UserAdapter.Dialog{
+            override fun onHoldClick(position: Int) {
+
+                adapter.setDialog(object : UserAdapter.Dialog {
+                    override fun onHoldClick(position: Int) {
+                        val dialog = AlertDialog.Builder(this@LihatDataActivity)
+                        dialog.setTitle(list[position].namaLengkap)
+                        dialog.setItems(R.array.item_options, DialogInterface.OnClickListener { dialog, which ->
+                            if (which == 0) {
+                                // Change
+                                val intent = Intent(this@LihatDataActivity, FormDataActivity::class.java)
+                                intent.putExtra("id", list[position].uid)
+                                startActivity(intent)
+                            } else if (which == 1) {
+                                // Delete
+                                database.userDao().delete(list[position])
+                                list.removeAt(position) // Remove from the local list
+                                adapter.notifyItemRemoved(position) // Update the RecyclerView
+                            } else {
+                                dialog.dismiss()
+                            }
+                        })
+                        val dialogView = dialog.create()
+                        dialogView.show()
+                    }
+                })
+
+            }
+
+        })
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, VERTICAL, false)

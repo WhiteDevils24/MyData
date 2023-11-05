@@ -18,6 +18,7 @@ class UserDataActivity : AppCompatActivity() {
         setSupportActionBar(toolbarFormData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
         val imagePath = intent.getStringExtra("imagePath")
         val nik = intent.getStringExtra("nik")
         val namaLengkap = intent.getStringExtra("namaLengkap")

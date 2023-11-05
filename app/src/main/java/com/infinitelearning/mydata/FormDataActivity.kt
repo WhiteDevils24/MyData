@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.textfield.TextInputLayout
@@ -86,38 +87,76 @@ class FormDataActivity : AppCompatActivity() {
             }
         }
 
-
         val btnSave: Button = findViewById(R.id.btn_simpan)
-        btnSave.setOnClickListener{
-            if (imageFilePath!= null &&
-                tilNIK.editText?.text?.isNotEmpty()==true &&
-                tilNamaLengkap.editText?.text?.isNotEmpty()==true &&
-                tilNomorHandphone.editText?.text?.isNotEmpty()==true &&
-                rgJenisKelamin.checkedRadioButtonId !=-1 &&
-                tilTanggalLahir.editText?.text?.isNotEmpty()==true &&
-                tilAlamat.editText?.text?.isNotEmpty()==true)
-            {
+        btnSave.setOnClickListener {
+            if (imageFilePath != null &&
+                tilNIK.editText?.text?.isNotEmpty() == true &&
+                tilNamaLengkap.editText?.text?.isNotEmpty() == true &&
+                tilNomorHandphone.editText?.text?.isNotEmpty() == true &&
+                rgJenisKelamin.checkedRadioButtonId != -1 &&
+                tilTanggalLahir.editText?.text?.isNotEmpty() == true &&
+                tilAlamat.editText?.text?.isNotEmpty() == true) {
+
                 val selectedRadioButton = findViewById<RadioButton>(rgJenisKelamin.checkedRadioButtonId)
                 val selectedRadioButtonText = selectedRadioButton.text.toString()
 
-                val user = User(
-                    null,
-                    tilNIK.editText!!.text.toString(),
-                    tilNamaLengkap.editText!!.text.toString(),
-                    tilNomorHandphone.editText!!.text.toString(),
-                    selectedRadioButtonText,
-                    tilTanggalLahir.editText!!.text.toString(),
-                    tilAlamat.editText!!.text.toString(),
-                    imageFilePath,
-                    
-                )
+                if (intent?.hasExtra("id") == true) {
+                    // Edit existing data
+                    val id = intent.getIntExtra("id", 0)
+                    val user = User(
+                        id,
+                        tilNIK.editText!!.text.toString(),
+                        tilNamaLengkap.editText!!.text.toString(),
+                        tilNomorHandphone.editText!!.text.toString(),
+                        selectedRadioButtonText,
+                        tilTanggalLahir.editText!!.text.toString(),
+                        tilAlamat.editText!!.text.toString(),
+                        imageFilePath
+                    )
 
-                database.userDao().insertAll(user)
+                    database.userDao().update(user)
+                } else {
+                    // Add new data
+                    val user = User(
+                        null,
+                        tilNIK.editText!!.text.toString(),
+                        tilNamaLengkap.editText!!.text.toString(),
+                        tilNomorHandphone.editText!!.text.toString(),
+                        selectedRadioButtonText,
+                        tilTanggalLahir.editText!!.text.toString(),
+                        tilAlamat.editText!!.text.toString(),
+                        imageFilePath
+                    )
+
+                    database.userDao().insertAll(user)
+                }
+
                 finish()
                 Toast.makeText(applicationContext, "Data Berhasil Di Simpan", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(applicationContext, "Data Tidak Lengkap Mohon Isi Data Dengan Lengkap", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Data Tidak Lengkap. Mohon Isi Data Dengan Lengkap", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        val intentData = intent.extras
+        if (intentData != null && intentData.containsKey("id")) {
+            // Editing existing data
+            val id = intentData.getInt("id", 0)
+            val user = database.userDao().get(id)
+
+            // Populate the form with existing data
+            Glide.with(this)
+                .load(user.imagePath)
+                .into(imgAddImage)
+            tilNIK.editText?.setText(user.nik)
+            tilNamaLengkap.editText?.setText(user.namaLengkap)
+            tilNomorHandphone.editText?.setText(user.nomorHandphone)
+            when (user.jenisKelamin) {
+                "Male" -> rgJenisKelamin.check(R.id.rb_kelaminPria)
+                "Female" -> rgJenisKelamin.check(R.id.rb_kelaminWanita)
+            }
+            tilTanggalLahir.editText?.setText(user.tanggalLahir)
+            tilAlamat.editText?.setText(user.alamat)
         }
 
     }

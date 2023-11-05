@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyData</string>
+
+    <string-array name="item_options">
+        <item>Ubah</item>
+        <item>Hapus</item>
+    </string-array>
 </resources>
