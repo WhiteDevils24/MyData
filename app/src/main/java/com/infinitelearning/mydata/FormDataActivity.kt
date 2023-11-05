@@ -32,7 +32,9 @@ class FormDataActivity : AppCompatActivity() {
     private val PICK_IMAGE= 1
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var database: AppDatabase
-    
+    private var imageByteArray: ByteArray? = null
+
+
     private lateinit var imgAddImage: ImageView
     private lateinit var tilNIK: TextInputLayout
     private lateinit var tilNamaLengkap: TextInputLayout
@@ -82,7 +84,8 @@ class FormDataActivity : AppCompatActivity() {
 
         val btnSave: Button = findViewById(R.id.btn_simpan)
         btnSave.setOnClickListener{
-            if (tilNIK.editText?.text?.isNotEmpty()==true &&
+            if (imageByteArray != null &&
+                tilNIK.editText?.text?.isNotEmpty()==true &&
                 tilNamaLengkap.editText?.text?.isNotEmpty()==true &&
                 tilNomorHandphone.editText?.text?.isNotEmpty()==true &&
                 rgJenisKelamin.checkedRadioButtonId !=-1 &&
@@ -92,16 +95,18 @@ class FormDataActivity : AppCompatActivity() {
                 val selectedRadioButton = findViewById<RadioButton>(rgJenisKelamin.checkedRadioButtonId)
                 val selectedRadioButtonText = selectedRadioButton.text.toString()
 
-                database.userDao().insertAll(User(
+                val user = User(
                     null,
                     tilNIK.editText!!.text.toString(),
                     tilNamaLengkap.editText!!.text.toString(),
                     tilNomorHandphone.editText!!.text.toString(),
                     selectedRadioButtonText,
                     tilTanggalLahir.editText!!.text.toString(),
-                    tilAlamat.editText!!.text.toString()
+                    tilAlamat.editText!!.text.toString(),
+                    imageByteArray
                 )
-                )
+
+                database.userDao().insertAll(user)
                 finish()
                 Toast.makeText(applicationContext, "Data Berhasil Di Simpan", Toast.LENGTH_SHORT).show()
             }else{
@@ -121,10 +126,13 @@ class FormDataActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
 
-        //Add image from Gallery to Image View
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null){
-            val selectedImageUri =data.data
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+            val selectedImageUri = data.data
             imgAddImage.setImageURI(selectedImageUri)
+
+            // Convert the selected image to a ByteArray
+            val inputStream = selectedImageUri?.let { contentResolver.openInputStream(it) }
+            imageByteArray = inputStream?.readBytes()
         }
 
     }

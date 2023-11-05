@@ -1,7 +1,9 @@
 package com.infinitelearning.mydata
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.infinitelearning.mydata.data.entity.User
@@ -14,6 +16,20 @@ class UserDataActivity : AppCompatActivity() {
         val toolbarFormData: Toolbar = findViewById(R.id.tb_dataPengguna)
         setSupportActionBar(toolbarFormData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val imageData = intent.getByteArrayExtra("imageData")
+
+        // Find the ImageView in your layout
+        val userImageView = findViewById<ImageView>(R.id.img_imageOutput)
+
+        if (imageData != null) {
+            // If image data is available, decode it into a Bitmap and set it in the ImageView
+            val imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+            userImageView.setImageBitmap(imageBitmap)
+        } else {
+            // If image data is not provided, you can set a default image or hide the ImageView.
+            userImageView.setImageResource(R.drawable.black_image_24)
+        }
 
         val nik = intent.getStringExtra("nik")
         val namaLengkap = intent.getStringExtra("namaLengkap")
