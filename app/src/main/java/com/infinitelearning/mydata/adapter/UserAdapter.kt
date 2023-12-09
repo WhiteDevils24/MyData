@@ -17,6 +17,7 @@ import org.w3c.dom.Text
 class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHolder>(){
     private lateinit var dialog: Dialog
 
+
     fun setDialog(dialog: Dialog){
         this.dialog = dialog
     }
@@ -24,6 +25,7 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
     interface Dialog{
         fun onHoldClick(position: Int)
     }
+
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var imagePath: ImageView
@@ -67,8 +69,6 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
         val imagePath = user.imagePath
         val imageBitmap = BitmapFactory.decodeFile(imagePath)
 
-
-
         holder.nik.text = user.nik
         holder.namaLengkap.text = user.namaLengkap
         holder.nomorHanphone.text = user.nomorHandphone
@@ -86,7 +86,6 @@ class UserAdapter(var list: List<User>): RecyclerView.Adapter<UserAdapter.ViewHo
             intent.putExtra("jenisKelamin", user.jenisKelamin)
             intent.putExtra("tanggalLahir", user.tanggalLahir)
             intent.putExtra("alamat",user.alamat)
-
 
             holder.itemView.context.startActivity(intent)
 

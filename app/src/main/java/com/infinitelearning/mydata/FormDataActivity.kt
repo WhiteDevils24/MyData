@@ -2,10 +2,8 @@ package com.infinitelearning.mydata
 
 import android.Manifest
 import android.app.DatePickerDialog
-import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +26,6 @@ import com.infinitelearning.mydata.data.AppDatabase
 import com.infinitelearning.mydata.data.entity.User
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -65,6 +62,7 @@ class FormDataActivity : AppCompatActivity() {
 
         database = AppDatabase.getInstance(applicationContext)
 
+
         val toolbarFormData: Toolbar = findViewById(R.id.tb_formData)
         setSupportActionBar(toolbarFormData)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -87,6 +85,8 @@ class FormDataActivity : AppCompatActivity() {
             }
         }
 
+
+
         val btnSave: Button = findViewById(R.id.btn_simpan)
         btnSave.setOnClickListener {
             if (imageFilePath != null &&
@@ -99,6 +99,8 @@ class FormDataActivity : AppCompatActivity() {
 
                 val selectedRadioButton = findViewById<RadioButton>(rgJenisKelamin.checkedRadioButtonId)
                 val selectedRadioButtonText = selectedRadioButton.text.toString()
+
+
 
                 if (intent?.hasExtra("id") == true) {
                     // Edit existing data
